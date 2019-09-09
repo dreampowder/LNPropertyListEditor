@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, LNPropertyListNodeType) {
 	LNPropertyListNodeTypeData,
 	LNPropertyListNodeTypeNumber,
 	LNPropertyListNodeTypeString,
+    LNPropertyListNodeTypeNull
 };
 
 @interface LNPropertyListNode : NSObject <NSSecureCoding>

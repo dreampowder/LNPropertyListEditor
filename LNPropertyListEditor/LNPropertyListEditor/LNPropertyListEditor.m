@@ -720,6 +720,10 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 	[self _convertToType:LNPropertyListNodeTypeDictionary forSender:sender];
 }
 
+- (IBAction)null:(id)sender{
+    [self _convertToType:LNPropertyListNodeTypeNull forSender:sender];
+}
+
 - (IBAction)_setToBoolValue:(id)sender
 {
 	NSInteger row = [self _rowForSender:sender beep:YES];
@@ -849,7 +853,7 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 			identifier = @"ValueCell";
 		}
 		
-		editable = !(type == LNPropertyListNodeTypeArray || type == LNPropertyListNodeTypeDictionary);
+		editable = !(type == LNPropertyListNodeTypeArray || type == LNPropertyListNodeTypeDictionary || type == LNPropertyListNodeTypeNull);
 		value = [LNPropertyListNode stringValueOfNode:item];
 		
 		if(editable && _flags.delegate_canEditValueOfNode)
@@ -944,7 +948,8 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 		}
 		else
 		{
-			textField.stringValue = [LNPropertyListNode stringValueOfNode:node];
+//            textField.stringValue = [LNPropertyListNode stringValueOfNode:node];
+            textField.stringValue = @"";
 			[(LNPropertyListCellView*)textField.superview flashError];
 		}
 	}

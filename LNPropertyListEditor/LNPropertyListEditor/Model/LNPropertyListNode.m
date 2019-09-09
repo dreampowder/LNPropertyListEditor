@@ -38,6 +38,9 @@
 	}
 	if([obj isKindOfClass:[NSString class]])
 	{
+        if ([((NSString*)obj) isEqualToString:@"<null>"]) {
+            return LNPropertyListNodeTypeNull;
+        }
 		return LNPropertyListNodeTypeString;
 	}
 	if([obj isKindOfClass:[NSDate class]])
@@ -80,6 +83,8 @@
 			return @"Number";
 		case LNPropertyListNodeTypeString:
 			return @"String";
+        case LNPropertyListNodeTypeNull:
+            return @"Null";
 	}
 }
 
@@ -113,6 +118,9 @@
 	{
 		return LNPropertyListNodeTypeNumber;
 	}
+    if ([str isEqualToString:@"Null"]) {
+        return LNPropertyListNodeTypeNull;
+    }
 	
 	return LNPropertyListNodeTypeUnknown;
 }
@@ -136,6 +144,8 @@
 			return @0;
 		case LNPropertyListNodeTypeString:
 			return @"";
+        case LNPropertyListNodeTypeNull:
+            return @"<null>";
 	}
 }
 
@@ -158,7 +168,12 @@
 		case LNPropertyListNodeTypeNumber:
 			return [LNPropertyListNode._numberFormatter numberFromString:str];
 		case LNPropertyListNodeTypeString:
+            if ([str isEqualToString:@"<null>"]) {
+                return nil;
+            }
 			return str;
+        case LNPropertyListNodeTypeNull:
+            return nil;
 	}
 }
 
@@ -185,6 +200,8 @@
 			return [LNPropertyListNode._numberFormatter stringFromNumber:valueToTranslate];
 		case LNPropertyListNodeTypeString:
 			return valueToTranslate;
+        case LNPropertyListNodeTypeNull:
+            return @"<null>";
 	}
 }
 
