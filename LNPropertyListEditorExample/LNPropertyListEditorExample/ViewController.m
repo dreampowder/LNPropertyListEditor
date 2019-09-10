@@ -25,6 +25,16 @@
 	_plistEditor.delegate = self;
 	
 	_plistEditor.propertyList = obj;
+    
+    //Example for adding custom menu items
+    [_plistEditor addSeparatorMenuItem];
+    [_plistEditor addCustomMenuItemWithTitle:@"TETS" keyEquvalent:nil withActionBlock:^(LNPropertyListNode *node) {
+        NSLog(@"Node: %@",node.key);
+    }];
+}
+
+- (void)didTapCustomAcitonForNode:(LNPropertyListNode*)node{
+    NSLog(@"Node: %@",node.key);
 }
 
 #pragma mark LNPropertyListEditorDelegate

@@ -362,14 +362,13 @@
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="Obl-Yu-AUV"/>
-                <menuItem title="Add Item" id="JTy-u0-Kc4">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Add Item" keyEquivalent="a" id="JTy-u0-Kc4">
                     <connections>
                         <action selector="add:" target="-1" id="uBk-pY-IGT"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-579" y="-1006.5"/>
+            <point key="canvasLocation" x="-588" y="-1044"/>
         </menu>
     </objects>
     <resources>

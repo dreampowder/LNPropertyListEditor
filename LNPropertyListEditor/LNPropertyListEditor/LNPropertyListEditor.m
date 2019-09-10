@@ -24,6 +24,8 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 	IBOutlet NSTableColumn* _valueColumn;
 	
 	NSUndoManager* _undoManager;
+    
+    NSMutableDictionary<NSNumber *,customMenuActionBlock>* customMenuSelectorDict;
 }
 
 @end
@@ -75,6 +77,7 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 											  ]];
 	
 	_undoManager = [NSUndoManager new];
+    
 }
 
 - (BOOL)isTypeColumnHidden
@@ -954,5 +957,41 @@ static NSPasteboardType LNPropertyListNodePasteboardType = @"com.LeoNatan.LNProp
 		}
 	}
 }
+
+#pragma mark CustomMenuAddingHandling
+
+- (void)addCustomMenuItemWithTitle:(NSString*)title keyEquvalent:(NSString*)keyEquvalent withActionBlock:(customMenuActionBlock)actionBlock{
+    NSMenuItem* item = [[NSMenuItem alloc] initWithTitle:title action:@selector(customMenuActionForSender:) keyEquivalent:keyEquvalent ? keyEquvalent : @""];
+    if (!customMenuSelectorDict) {
+        customMenuSelectorDict = @{}.mutableCopy;
+    }
+    [_menuItem addItem:item];
+    customMenuSelectorDict[@(item.hash)] = actionBlock;
+}
+
+- (void)addSeparatorMenuItem{
+    [_menuItem addItem:[NSMenuItem separatorItem]];
+}
+
+- (void)removeAllMenuItems{
+    [_menuItem setItemArray:@[]];
+    if (customMenuSelectorDict) {
+        [customMenuSelectorDict removeAllObjects];
+    }
+}
+
+- (void)customMenuActionForSender:(NSMenuItem*)sender{
+    NSInteger row = [self _rowForSender:sender beep:YES];
+    if(row == -1)
+    {
+        return;
+    }
+    LNPropertyListNode* node = [_outlineView itemAtRow:row];
+    customMenuActionBlock menuAction = [customMenuSelectorDict objectForKey:@(sender.hash)];
+    if (menuAction) {
+        menuAction(node);
+    }
+}
+
 
 @end

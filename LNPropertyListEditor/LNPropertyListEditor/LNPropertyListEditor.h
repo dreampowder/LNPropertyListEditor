@@ -32,6 +32,21 @@ IB_DESIGNABLE
 @property (nonatomic, weak) id<LNPropertyListEditorDataTransformer> dataTransformer;
 
 /**
+ * Adds a new MenuItem to the context menu of each row.
+ * Inserted menuitem will execute the given actino block.
+ */
+typedef void (^customMenuActionBlock)(LNPropertyListNode* node);
+- (void)addCustomMenuItemWithTitle:(NSString*)title keyEquvalent:(NSString*)keyEquvalent withActionBlock:(customMenuActionBlock)actionBlock;
+
+/**
+ * Adds a separator to the context menu of each row.
+ */
+- (void)addSeparatorMenuItem;
+/**
+ * Removes all menu items from the context menu of each row.
+ */
+- (void)removeAllMenuItems;
+/**
  * Adds a new item.
  */
 - (IBAction)add:(id)sender;
